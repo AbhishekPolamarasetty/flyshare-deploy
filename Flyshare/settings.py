@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5!j$(k*=hstmjq27m+t0q)^qic%-3x_+sf@v1q%^hfboas5wdu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'UserAuth.UserModel'
 # Application definition
@@ -45,14 +45,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+'django.middleware.security.SecurityMiddleware',
+'django.contrib.sessions.middleware.SessionMiddleware',
+"corsheaders.middleware.CorsMiddleware",
+'django.middleware.common.CommonMiddleware',
+'django.middleware.csrf.CsrfViewMiddleware',
+'django.contrib.auth.middleware.AuthenticationMiddleware',
+'django.contrib.messages.middleware.MessageMiddleware',
+'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'Flyshare.urls'
@@ -164,6 +164,5 @@ EMAIL_HOST_PASSWORD = 'mqoaargctoidqssj'
 #     # other authentication backends if needed
 # ]
 CORS_ALLOWED_ORIGINS = [
-    "http://44.210.92.94:5000",
     "http://localhost:3000",  # Replace with the origin of your React app
 ]
