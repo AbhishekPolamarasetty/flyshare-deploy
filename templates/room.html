@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+body {
+  margin: 0 auto;
+  margin-left: 330px;
+  max-width: 800px;
+  padding: 0 20px;
+  /* border: 3px solid black; */
+}
+.single{
+  display: inline-flex;
+  /* border: 3px solid black; */
+}
+
+#message{
+  margin-right: 20px;
+  /* width: 350px; */
+  /* border: 3px solid black; */
+  padding-right: 300px;
+}
+
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  width: 615px;
+  /* padding-right: -140px; */
+  margin: 10px 0;
+  /* border: 3px solid black; */
+  /* width: 150px; */
+
+  /* border: 3px solid black; */
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  float: right;
+  color: #000000;
+}
+
+.time-left {
+  float: right;
+  color: #999;
+}
+.sender-name {
+    float: left;
+}
+
+.receiver-name {
+    float: left;
+}
+
+.sender-message {
+    text-align: left;
+    margin-top: 25px;
+    /* border: 3px solid black; */
+}
+
+.receiver-message {
+    text-align: left;
+    margin-top: 25px;
+    /* border: 3px solid black; */
+}
+.sender-container{
+  border: 2px solid #dedede;
+  background-color: #a7a0a0;
+  border-radius: 5px;
+  padding: 20px;
+  /* padding-right: -140px; */
+  margin: 10px;
+  margin-left: 290px;
+  width: 270px;
+}
+.receiver-container{
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 20px;
+  /* padding-right: -140px; */
+  margin: 10px 0;
+  /* margin-left: 180px; */
+  width: 250px;
+}
+#display{
+  /* border: 3px solid black; */
+  width: 600px;
+}
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
+
+    input[type=submit] {
+    width: 100%;
+    background-color: #581ed6;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+    background-color: #8c66dd;
+    }
+
+    div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    }
+    .rotate{
+      margin-top: 10px;
+      margin-right: 20px;
+      font-size:36px;
+      cursor: pointer;
+    }
+    .btn {
+      border: none;
+      cursor: pointer;
+    }
+    #file-input{
+      display: none;
+    }
+    
+</style>
+
+</head>
+<body>
+
+<h2>{{room}} - FlyShareChat</h2>
+
+<div id="display">
+
+<!-- <div class="container darker">
+  <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
+  <span class="time-left">20th, April 2021</span>
+</div> -->
+
+</div>
+
+
+
+<div class="container">
+    <form id="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="username" id="username" value="{{username}}"/>
+        <input type="hidden" name="room_id" id="room_id" value="{{room_details.id}}"/>
+        <div id="file-preview-container" style="display: none;">
+        <div  id="file-preview"></div>
+      </div>
+        <div class="single">
+          <input type="text" name="message" id="message" class="message1"/>
+          <input type="file" id="file-input" />
+          <button type="button" class="btn" onclick="document.getElementById('file-input').click()">
+            <i class="material-icons rotate" onclick="openFilePicker()">add_a_photo</i>
+          </button>
+          <input type="submit" value="Send" class="chat-single" >
+        </div>
+       
+    </form>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function () {
+    setInterval(function () {
+      $.ajax({
+        type: 'GET',
+        url: "/app1/getMessages/{{room}}/",
+        success: function (response) {
+          console.log(response);
+          $("#display").empty();
+          for (var key in response.messages) {
+            var message = response.messages[key];
+            var isSender = message.user === "{{username}}";
+            var containerClass = isSender ? 'sender-container' : 'receiver-container';
+            var dateObject = new Date(message.date);
+            var formattedDate = dateObject.toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
+            var formattedTime = dateObject.toLocaleTimeString('en-US', { hour12: false, hour: 'numeric', minute: 'numeric' });
+
+            var temp = "<div class='" + containerClass + "'>" +
+              "<b class='" + (isSender ? 'sender-name' : 'receiver-name') + "'>" + message.user + "</b>" +
+              "<p class='" + (isSender ? 'sender-message' : 'receiver-message') + "'>" + message.value + "</p>" +
+              "<span class='" + (isSender ? 'time-right' : 'time-left') + "'>" + formattedDate + " " + formattedTime + "</span>" +
+              "</div>";
+            $("#display").append(temp);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error(xhr.responseText);
+          alert('An error occurred while fetching messages');
+        }
+      });
+    }, 1000);
+  });
+
+  function openFilePicker() {
+    document.getElementById('file-input').click();
+  }
+
+  function updateFilePreview() {
+    var fileInput = document.getElementById('file-input');
+    var previewContainer = document.getElementById('file-preview');
+    var messageInput = document.getElementById('message');
+
+    if (fileInput.files.length > 0) {
+      var selectedFile = fileInput.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        var previewImage = document.createElement('img');
+        previewImage.src = e.target.result;
+        previewImage.style.maxWidth = '100%';
+        previewContainer.innerHTML = ''; // Clear previous content
+        previewContainer.appendChild(previewImage);
+
+        // Display the image over the input field
+        previewContainer.style.display = 'block';
+      };
+
+      reader.readAsDataURL(selectedFile);
+     
+
+// Hide the input field temporarily
+// messageInput.style.display = 'none';
+
+    } else {
+      previewContainer.innerHTML = ''; // Clear the preview if no file is selected
+
+      // Clear the image from the input field
+      // messageInput.style.display = 'block';
+      
+      previewContainer.style.display = 'none';
+    }
+  }
+
+  $(document).on('submit', '#post-form', function (e) {
+    e.preventDefault();
+
+    var fileInput = document.getElementById('file-input');
+    var messageInput = document.getElementById('message');
+    var previewContainer = document.getElementById('file-preview');
+
+    var formData = new FormData();
+    formData.append('username', $('#username').val());
+    formData.append('room_id', $('#room_id').val());
+    formData.append('message', $('#message').val());
+
+    // Check if an image is selected
+    if (fileInput.files.length > 0) {
+      formData.append('image', fileInput.files[0]);
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: '/app1/send',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        // Handle success
+      },
+      error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+        alert('An error occurred while sending the message');
+      },
+      complete: function () {
+        // Clear the input field and image preview
+        fileInput.value = '';
+        messageInput.value = '';
+        previewContainer.innerHTML = '';
+        messageInput.style.backgroundImage = 'none';
+      }
+    });
+  });
+
+  $(document).ready(function () {
+    $('#file-input').on('change', function () {
+      updateFilePreview();
+    });
+  });
+</script>
+
+</body>
+</html>
