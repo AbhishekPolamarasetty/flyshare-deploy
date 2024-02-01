@@ -76,20 +76,6 @@ $(document).ready(function () {
   }
 });
 
-// function rate(stars, cardIndex) {
-//   const cards = document.querySelectorAll(".card");
-//   const starElements = cards[cardIndex].querySelectorAll(".rating .star");
-
-//   starElements.forEach((star, index) => {
-//     if (index === stars - 1 && star.classList.contains("clicked")) {
-//       star.classList.remove("clicked"); // Remove the yellow background when clicked twice
-//     } else if (index < stars) {
-//       star.classList.add("clicked");
-//     } else {
-//       star.classList.remove("clicked");
-//     }
-//   });
-// }
 function menuToggle() {
   const toggleMenu = document.querySelector(".menu");
   toggleMenu.classList.toggle("active");

@@ -150,6 +150,22 @@
             background-color: #581ed6;
             color: white;
         }
+        .post-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjust the gap between posts as needed */
+}
+
+.post-item {
+    width: calc(40%); /* 50% width with a gap of 20px */
+    box-sizing: border-box;
+    background-color: #581ed6;
+    border-radius: 5px;
+    list-style: none;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid black; 
+}
 
     </style>
  
@@ -222,7 +238,7 @@
                 </div>
                 </a>
                 <a href="#" class="profile">
-                    <img src="{{ user.profile_picture }}">
+                    <img src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}https://th.bing.com/th/id/OIP.Ntwccxljc9Gmka_Y6InYMAHaHa?rs=1&pid=ImgDetMain{% endif %}" alt="Profile Picture">
                 </a>
             </nav>
 
@@ -243,14 +259,15 @@
                                     <div class="mt-3 px-4 col-md-6">
                                         <!-- <label for="profile-picture" class="text-uppercase name">Profile Picture</label> -->
                                         <div class="d-flex flex-row align-items-center mt-2">
-                                            <img id="profile-picture" src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}https://th.bing.com/th/id/OIP.Ntwccxljc9Gmka_Y6InYMAHaHa?rs=1&pid=ImgDetMain{% endif %}" width="60" class="rounded">
+                                
+                                            <img id="profile-picture" src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}https://th.bing.com/th/id/OIP.Ntwccxljc9Gmka_Y6InYMAHaHa?rs=1&pid=ImgDetMain{% endif %}" alt="Profile Picture" width="60" class="rounded">
                                             <div class="ml-3">
                                                 <!-- <label for="file-input" class="btn">Upload new picture</label> -->
-                                                <input type="file" id="file-input" style="display: none;" />
-                                                <button type="button" id="remove-picture" class="btn" onclick="document.getElementById('file-input').click()">upload</button>
-                                                <input type="file" id="file-input" style="display: none;" name="profile_picture" accept="image/*" value="{{ user.profile_picture }}">
-                                                <button type="button" id="remove-picture" class="btn">Remove</button>
-                                            </div>
+                                                <input type="file" id="file-input1" style="display: none;" name="profile_picture" accept="image/*"  value="{{ user.profile_picture }}">
+                                                <button type="button" id="remove-picture" class="btn" onclick="document.getElementById('file-input1').click()">upload</button>
+         
+                                                <button type="button" id="remove-picture" class="btn" >Remove</button> 
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -287,32 +304,29 @@
             </div>
            
            
-            <div id="my-posts-container" class="post-container">
-                <div class="post-flex-container">
-                    {% for post in user_posts %}
-                    <div class="post-item">
-                            <div class="post1-container">
-                                <!-- <div class="post-header">
-                                    <strong>Passenger Name:</strong> {{ post.passenger_name }}<br>
-                                    <div class="post-menu" onclick="toggleOptionsMenu('{{ post.id }}')">&#8226;&#8226;&#8226;</div>
-                                </div> -->
-                                <strong>Passenger Name:</strong> {{ post.passenger_name }}<br>
-                                <strong>Date of Journey:</strong> {{ post.date_of_journey }}<br>
-                                <strong>Gender:</strong> {{ post.gender}}<br>
-                                <strong>Flight Number:</strong> {{ post.flight_number }}<br>
-                                <strong>PNR Number:</strong> {{ post.pnr_number }}<br>
-                                <strong>Source:</strong> {{ post.source }}<br>
-                                <strong>Destination:</strong> {{ post.destination }}<br>
-                                <strong>Baggage Space:</strong> {{ post.baggage_space }} kgs<br>
-                            </div>
-                            <div id="options-menu-{{ post.id }}" class="options-menu">
-                                <ul>
-                                    <button type="button" class="btn btn-danger"  onclick="confirmDelete('{{ post.id }}')">Delete  </button>                        </ul>
-                            </div>
-                        </div>
-                    {% endfor %}
-                    </div>
+           <div id="my-posts-container" class="post-container">
+    <div class="post-flex-container">
+        {% for post in user_posts %}
+            <div class="post-item">
+                <div class="post1-container">
+                    <strong>Passenger Name:</strong> {{ post.passenger_name }}<br>
+                    <strong>Date of Journey:</strong> {{ post.date_of_journey }}<br>
+                    <strong>Gender:</strong> {{ post.gender }}<br>
+                    <strong>Flight Number:</strong> {{ post.flight_number }}<br>
+                    <strong>PNR Number:</strong> {{ post.pnr_number }}<br>
+                    <strong>Source:</strong> {{ post.source }}<br>
+                    <strong>Destination:</strong> {{ post.destination }}<br>
+                    <strong>Baggage Space:</strong> {{ post.baggage_space }} kgs<br>
+                </div>
+                <div id="options-menu-{{ post.id }}" class="options-menu">
+                    <ul>
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ post.id }}')">Delete</button>
+                    </ul>
+                </div>
             </div>
+        {% endfor %}
+    </div>
+</div>
             <ul id="chat-rooms-container" class="submenu">
                 {% for post in user_posts %}
                     {% if post.baggage_number %}
@@ -346,6 +360,10 @@
         </div>
  
         <script>
+    //          function removeProfilePicture() {
+    //     // Reset the profile picture to the default image URL
+    //     document.getElementById('profile-picture').src = 'https://th.bing.com/th/id/OIP.Ntwccxljc9Gmka_Y6InYMAHaHa?rs=1&pid=ImgDetMain';
+    // }
             document.addEventListener("DOMContentLoaded", function () {
                 const editProfileLink = document.getElementById("edit-profile-link");
                 const formContainer = document.getElementById("form-container");
@@ -662,17 +680,7 @@
         #my-posts-container {
             display: none;
         }
-   
-        .post-item {
-        list-style: none;
-        margin-bottom: 10px;
-        padding: 10px;
-        border: 1px solid black; /* Add a border for separation */
-        border-radius: 5px;
-        background-color: #581ed6;
-         /* #3C91E6;; */
-        }
-   
+
         .post-container {
             padding: 10px;
         }

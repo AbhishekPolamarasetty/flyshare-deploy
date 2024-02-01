@@ -133,83 +133,6 @@ $(document).ready(function () {
     $("#successMessage").html("Post added successfully!");
   }
 
-// $(document).ready(function () {
-//   $("#submit").click(function (e) {
-//     e.preventDefault(); // Prevent the default form submission
-
-//     // Perform form validation here
-//     var isValid = true;
-
-//     // Check each required input
-//     $('input[required]').each(function () {
-//       if (!$(this).val()) {
-//         isValid = false;
-//         return false; // Exit the loop early if a required field is empty
-//       }
-//     });
-
-//     if (isValid) {
-//       // All required fields are filled, proceed to show the modal
-//       Swal.fire({
-//         title: "Posted",
-//         text: "Post added successfully",
-//         // imageUrl: "https://unsplash.it/400/200",
-//         imageUrl: "/static/Post/images/back.png",
-//         imageWidth: 400,
-//         imageHeight: 200,
-//         imageAlt: "Custom image",
-//         showConfirmButton: true,
-//         allowOutsideClick: false,
-//         allowEscapeKey: false,
-//       }).then((result) => {
-//         if (result.isConfirmed) {
-//           // Redirect to "getstarted.html" after clicking OK
-//           window.location.href = indexUrl;
-//         }
-//       });
-//     } else {
-//       // If any required field is empty, alert the user
-//       Swal.fire({
-//               position: "center",
-//               title: "Missing fields",
-//               icon: "warning",
-//               text: "Please fill all the fields",
-//               confirmButtonText: "OK",
-//             });
-//     }
-//   });
-// });
-$("form").submit(async function (event) {
-  event.preventDefault(); // Prevent the form from submitting normally
-
-  // Check if all fields are filled
-  if (await validateForm()) {
-    console.log("Form is valid, submitting...");
-
-    // If validation is successful, submit the form using AJAX
-    $.ajax({
-      url: $(this).attr("action"),
-      type: $(this).attr("method"),
-      data: $(this).serialize(),
-      success: function (response) {
-        // Handle the success response as needed
-        console.log("Form submitted successfully:", response);
-        showSuccessMessage("/base");
-      },
-      error: function (error) {
-        // Handle the error response as needed
-        console.error("Error submitting form:", error);
-        alert("Error submitting form. Please try again.");
-      },
-    });
-  } else {
-    console.log("Validation failed");
-    // If validation fails, you can choose to show an error message or take other actions
-    // For example, you can display an alert or customize the behavior
-    alert("Validation failed. Please check the form.");
-  }
-});
-
 // Function to validate the form
 async function validateForm() {
   const form = $("form")[0];
@@ -242,7 +165,7 @@ function showSuccessMessage() {
   }).then((result) => {
     // Redirect to the specified URL after the Swal modal is closed
     if (result.dismiss === Swal.DismissReason.timer) {
-      window.location.href = `/profile`;
+      window.location.href = `/app1/get-post`;
     }
   });
 }

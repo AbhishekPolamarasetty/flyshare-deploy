@@ -4,6 +4,8 @@ from . import views
 from .Password import *
 from .forms import UserPasswordResetForm, UserPasswordConfirmForm
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -36,3 +38,7 @@ urlpatterns = [
         form_class = UserPasswordConfirmForm), name='password_reset_confirm'
     ),
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Serve media files during development
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
