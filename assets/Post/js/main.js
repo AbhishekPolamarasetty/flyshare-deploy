@@ -133,6 +133,28 @@ $(document).ready(function () {
     $("#successMessage").html("Post added successfully!");
   }
 
+// Function to validate the form
+async function validateForm() {
+  const form = $("form")[0];
+  const formElements = form.elements;
+
+  for (let i = 0; i < formElements.length - 1; i++) {
+    if (formElements[i].type !== "checkbox" && formElements[i].value === "") {
+      // Display an alert or customize the behavior for unfilled fields
+      alert("Please fill in all fields.");
+      return false;
+    }
+  }
+
+  // Check if the checkbox is checked
+  if (!formElements["checkbox"].checked) {
+    alert("Please agree to the terms and conditions.");
+    return false;
+  }
+
+  return true;
+}
+
 // Function to show success message
 function showSuccessMessage() {
   Swal.fire({

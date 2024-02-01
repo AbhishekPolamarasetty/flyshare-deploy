@@ -33,7 +33,7 @@ class UserLoginForm(AuthenticationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserModel
-        fields = ['username','first_name', 'last_name', 'username', 'email','phone_number']
+        fields = ['username','first_name', 'last_name', 'username', 'email','profile_picture']
 
 
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm

@@ -383,7 +383,8 @@ def send(request):
 
         if image:
             # Handle image upload
-            new_message = Message.objects.create(user=username, room=room_id, image=image)
+            new_message = Message.objects.create(user=username, room=room_id, image=image, value = message)
+
         else:
             # Handle text message
             new_message = Message.objects.create(user=username, room=room_id, value=message)
