@@ -23,7 +23,7 @@ class PostModel(models.Model):
     is_checked = models.BooleanField(default=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     baggage_number = models.CharField(max_length=5, unique=True)
-    chat_room_id = models.CharField(max_length=5, blank=True, null=True)
+    # chat_room_id = models.CharField(max_length=5, blank=True, null=True)
 
 
 # class ChatMessage(models.Model):
@@ -45,6 +45,8 @@ class Message(models.Model):
     user = models.CharField(max_length=1000000)
     image = models.ImageField(upload_to='message_images/', blank=True, null=True)
     room = models.CharField(max_length=1000000)
+    # baggage_number = models.ForeignKey(PostModel, on_delete=models.CASCADE, null=True)
+
 
 
 

@@ -204,7 +204,7 @@
             </li>
            
             <li>
-                <a href="#" id="my-posts-link">
+                <a href="" id="my-posts-link">
                     <i class='bx bxs-shopping-bag-alt emoji' ></i>
                     <span class="text">My Posts</span>
                 </a>
@@ -327,6 +327,8 @@
         {% endfor %}
     </div>
 </div>
+
+
             <ul id="chat-rooms-container" class="submenu">
                 {% for post in user_posts %}
                     {% if post.baggage_number %}
@@ -334,6 +336,7 @@
                             <a href="{% url 'room' room=post.baggage_number %}">
                                 <span class="text">{{ post.passenger_name }} - Room {{ post.baggage_number }}</span>
                             </a>
+                  
                         </li>
                     {% else %}
                         <li>
@@ -343,14 +346,8 @@
                 {% endfor %}
             </ul>
  
-            <ul id="entered-rooms-container" class="submenu">
-                {% for room in entered_rooms %}
-                    <li>
-                        <a href="{% url 'room' room=room.chat_room_id %}">
-                            <span class="text">{{ room.passenger_name }} - Room {{ room.chat_room_id }}</span>
-                        </a>
-                    </li>
-                {% endfor %}
+            <ul id="messages-container" class="submenu">
+              <!-- Messages will be displayed here -->
             </ul>
            
         </main>
@@ -364,6 +361,36 @@
     //     // Reset the profile picture to the default image URL
     //     document.getElementById('profile-picture').src = 'https://th.bing.com/th/id/OIP.Ntwccxljc9Gmka_Y6InYMAHaHa?rs=1&pid=ImgDetMain';
     // }
+
+    function fetchMessages() {
+    fetch('/app1/getAllMessages/')  // Replace with the actual URL of your view
+        .then(response => response.json())
+        .then(data => {
+            // Extract messages from the response
+            const messages = data.messages;
+
+            // Extract unique combinations of user and room using a Set
+            const uniqueUserRoomSet = new Set(messages.map(message => `${message.user}-${message.room}`));
+            const uniqueUserRooms = Array.from(uniqueUserRoomSet);
+
+            // Display messages in the HTML page
+            const messagesContainer = document.getElementById('messages-container');
+            messagesContainer.innerHTML = '';  // Clear previous messages
+
+            uniqueUserRooms.forEach(userRoom => {
+                const [user, room] = userRoom.split('-');
+                const messageElement = document.createElement('li');
+                messageElement.innerHTML = `<span class="text">${user} - Room - ${room}</span>`;
+                messagesContainer.appendChild(messageElement);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// Call the fetchMessages function when the page loads
+window.onload = fetchMessages;
+
+
             document.addEventListener("DOMContentLoaded", function () {
                 const editProfileLink = document.getElementById("edit-profile-link");
                 const formContainer = document.getElementById("form-container");

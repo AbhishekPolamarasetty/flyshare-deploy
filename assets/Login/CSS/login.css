@@ -165,7 +165,7 @@ header{
 .two label a:hover{
     text-decoration: underline;
 }
-/* @media only screen and (max-width: 786px){
+@media only screen and (max-width: 786px){
     .nav-button{
         display: none;
     }
@@ -218,30 +218,5 @@ header{
     .register-container .two-forms{
         flex-direction: column;
         gap: 0;
-    }
-} */
-
-@media(max-width: 1067px){
-    .wrapper{
-        border: 3px solid black;
-    }
-    .login-container{
-        width: 500px;
-        border: 2px solid black;
-        margin-left: -50px;
-    }
-    body{
-        background: url(https://img.freepik.com/free-vector/biophilic-design-workspace-abstract-concept-illustration-biophilic-room-eco-friendly-workspace-green-office-design-trend-bring-outdoors-indoors-vertical-garden_335657-114.jpg?size=626&ext=jpg&ga=GA1.1.1856809106.1705679310&semt=ais);
-        /* background-size: cover; */
-        /* width: 200px; */
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: right;
-        background-position: 480px;
-    }
-} 
-@media(max-width: 800px){
-    body{
-        background: none;
     }
 }

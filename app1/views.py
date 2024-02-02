@@ -132,14 +132,14 @@ def Post(request):
 
         # Save the new instance to the database
         new_passenger.save()
-    chat_rooms = PostModel.objects.filter(user=request.user).exclude(chat_room_id__isnull=True)
-    entered_rooms = chat_rooms.filter(chat_room_id=request.user.username).exclude(chat_room_id__isnull=True)
-    user_posts = PostModel.objects.filter(passenger_name=request.user.username)
+    # chat_rooms = PostModel.objects.filter(user=request.user).exclude(chat_room_id__isnull=True)
+    # entered_rooms = chat_rooms.filter(chat_room_id=request.user.username).exclude(chat_room_id__isnull=True)
+    # user_posts = PostModel.objects.filter(passenger_name=request.user.username)
 
     return render(request, 'Post/post.html', {
-        'user_posts': user_posts,
-        'chat_rooms' : chat_rooms,
-        'entered_rooms': entered_rooms,
+        # 'user_posts': user_posts,
+        # 'chat_rooms' : chat_rooms,
+        # 'entered_rooms': entered_rooms,
 
     })
 
@@ -369,14 +369,18 @@ def checkview(request):
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-
+from .models import PostModel
 @method_decorator(csrf_exempt, name='dispatch')
 def send(request):
     if request.method == 'POST':
+        
+        # post_model = get_object_or_404(PostModel, id=post_model_id)
+
         username = request.POST.get('username', '')
         room_id = request.POST.get('room_id', '')
         message = request.POST.get('message', '')
         image = request.FILES.get('image', None)
+        # baggage_number=post_model
 
         if not (username and room_id and (message or image)):
             return JsonResponse({'error': 'Invalid parameters'})
@@ -398,6 +402,17 @@ def getMessages(request, room):
     room_details = Room.objects.get(name=room)
 
     messages = Message.objects.filter(room=room_details.id)
+    return JsonResponse({"messages":list(messages.values())})
+
+
+def getAllMessages(request):
+    # username = request.GET.get('user')
+    user = request.user.username  # Get the authenticated user
+    # print(user)
+    # room_details = Room.objects.get(name=room)
+    messages = Message.objects.filter(user=user)
+
+    # messages = Message.objects.filter(room=room_details.id)
     return JsonResponse({"messages":list(messages.values())})
 
 
@@ -443,6 +458,7 @@ def getMessages(request, room):
 
 #     return render(request, 'Login/edit_profile.html', {'user': user})
 
+from django.http import JsonResponse
 from django.urls import reverse  
 def profilePage(request):
     user = request.user

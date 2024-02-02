@@ -74,13 +74,13 @@ class UserModelAPI_ID(APIView):
         qs = self.get_object(id)
         serializer = UserModelSerializer(qs)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    def put(self,request,id):
+    def put(self, request, id):
         qs = self.get_object(id)
         serializer = UserModelSerializer(instance=qs, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_205_RESET_CONTENT)
-        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request,id):
         qs = self.get_object(id)
         if qs:

@@ -5,34 +5,7 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-.post1-container {
 
-	color: white;
-}
-.post-container button{
-	margin-top: 5px;
-	background-color: rgb(221, 84, 84);
-}
-.post-flex-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Adjust the gap between posts as needed */
-}
-.post-flex-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Adjust the gap between posts as needed */
-}
-
-/* .post-item {
-    width: calc(50% - 20px); /* 50% width with a gap of 20px 
-    box-sizing: border-box;
-}
-
-.post-item {
-    width: calc(50% - 20px); /* 50% width with a gap of 20px 
-    box-sizing: border-box;
-} */
 a {
 	text-decoration: none;
 }

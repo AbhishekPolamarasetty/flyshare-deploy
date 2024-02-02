@@ -100,18 +100,24 @@ body {
         <label>Room Number</label>
         <input type="text" name="room_name" id="room_name" width="100px" readonly/>
         <label>Username</label>
-        <input type="text" name="username" id="username" width="100px" required/>
+        <input type="text" name="username" id="username" width="100px" required readonly/>
         <input type="submit" value="Enter Room">
     </form>
 </div>
 <script>
 // Get the roomnumber from the URL
 const urlParams = new URLSearchParams(window.location.search);
+
 const roomnumber = urlParams.get('roomnumber');
 // Set the room_name input value based on the roomnumber
 document.getElementById('room_name').value = roomnumber;
+document.addEventListener("DOMContentLoaded", function () {
+        const username = "{{ username }}";
+        document.getElementById("username").value = username;
+      });
 
 </script>
+
 </body>
 
 
