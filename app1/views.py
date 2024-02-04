@@ -347,14 +347,27 @@ def home(request):
     room = request.GET.get('room')
     return render(request, 'home.html', {'username': username, 'room': room})
 
+# def room(request, room):
+#     username = request.GET.get('username')
+#     room_details = Room.objects.get(name=room)
+#     return render(request, 'room.html', {
+#         'username': username,
+#         'room': room,
+#         'room_details': room_details
+#     })
+from django.shortcuts import get_object_or_404
+
 def room(request, room):
     username = request.GET.get('username')
-    room_details = Room.objects.get(name=room)
+    room_details = get_object_or_404(Room, name=room)
+    room_id = room_details.id  # Get the room_id from the Room object
     return render(request, 'room.html', {
         'username': username,
         'room': room,
-        'room_details': room_details
+        'room_details': room_details,
+        'room_id': room_id
     })
+
 
 def checkview(request):
    room = request.POST.get('room_name', '')

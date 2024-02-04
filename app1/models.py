@@ -38,6 +38,7 @@ from datetime import datetime
 
 class Room(models.Model):
     name = models.CharField(max_length=1000)
+    # room = models.CharField(max_length=1000000)
     
 class Message(models.Model):
     value = models.CharField(max_length=1000000)
@@ -45,7 +46,6 @@ class Message(models.Model):
     user = models.CharField(max_length=1000000)
     image = models.ImageField(upload_to='message_images/', blank=True, null=True)
     room = models.CharField(max_length=1000000)
-    # baggage_number = models.ForeignKey(PostModel, on_delete=models.CASCADE, null=True)
 
 
 
