@@ -82,29 +82,29 @@ WSGI_APPLICATION = 'Flyshare.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
-# "default": {
-#     "ENGINE": "djongo",
-#     'ENFORCE_SCHEMA': False,
-#     "NAME": "Flyshare",  # name of your DB which you want to access
-#     "CLIENT": {
-#         'host': 'mongodb+srv://Tharun:Tharun%401316@cluster0.ng51njk.mongodb.net/',  # your db_url if not hosted then localhost
-#         'port': 27017,  # port e.g. 27017
-#         'username': 'Tharun',
-#         'password': 'Tharun@1316',
-#         'authSource': 'admin',  # set your db auth_source if you know
-#         'authMechanism': 'SCRAM-SHA-1'  # set your auth_mechanism if you know
-
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-# }
+
+DATABASES = {
+"default": {
+    "ENGINE": "djongo",
+    'ENFORCE_SCHEMA': False,
+    "NAME": "Flyshare-room",  # name of your DB which you want to access
+    "CLIENT": {
+        'host': 'mongodb+srv://Tharun:Tharun%401316@cluster0.ng51njk.mongodb.net/',  # your db_url if not hosted then localhost
+        'port': 27017,  # port e.g. 27017
+        'username': 'Tharun',
+        'password': 'Tharun@1316',
+        'authSource': 'admin',  # set your db auth_source if you know
+        'authMechanism': 'SCRAM-SHA-1'  # set your auth_mechanism if you know
+
+    }
+}
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -164,6 +164,3 @@ EMAIL_HOST_PASSWORD = 'mqoaargctoidqssj'
 #     'django.contrib.auth.backends.ModelBackend',
 #     # other authentication backends if needed
 # ]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Replace with the origin of your React app
-]
