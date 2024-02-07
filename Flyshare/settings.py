@@ -93,7 +93,7 @@ DATABASES = {
 "default": {
     "ENGINE": "djongo",
     'ENFORCE_SCHEMA': False,
-    "NAME": "Flyshare-room",  # name of your DB which you want to access
+    "NAME": "Flyshare-roomlocalhost",  # name of your DB which you want to access
     "CLIENT": {
         'host': 'mongodb+srv://Tharun:Tharun%401316@cluster0.ng51njk.mongodb.net/',  # your db_url if not hosted then localhost
         'port': 27017,  # port e.g. 27017
