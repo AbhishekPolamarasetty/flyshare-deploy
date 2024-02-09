@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from .views import *
 from . import views
 from .Password import *
@@ -16,8 +16,8 @@ urlpatterns = [
     path('verify/',views.verifyPage,name='verify'),
     path('register/', views.registerPage, name='register'),
     path('activate/<uidb64>/<token>', views.activate, name='activate'),
-    path('login/',views.loginPage,name='login'),
-    path('base/',views.basePage,name='base'),
+    re_path(r'^login/$',views.loginPage,name='login'),
+    re_path(r'^base/$',views.basePage,name='base'),
     path('submit/', views.submit_form, name='submit_form'),
     path('logout/', views.logout_view, name='logout'),
    
