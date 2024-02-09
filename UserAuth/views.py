@@ -157,7 +157,7 @@ def registerPage(request):
             user.save()
             message = activateEmail(request, user, form.cleaned_data.get('email'))
             messages.success(request, message)
-            return redirect('verify')
+            return redirect('/verify/')
         else:
             for error in list(form.errors.values()):
                 messages.error(request, error)
@@ -173,7 +173,7 @@ def loginPage(request):
         user = authenticate(request,email=uname,password=upass)
         if user is not None:
             login(request,user)
-            return render(request,'Login/base.html')
+            return redirect('/base/')
         else:
             messages.error(request, "Incorrect credentials. Please try again.")
            
@@ -186,10 +186,10 @@ def basePage(request):
 
 def logout_view(request):
     logout(request)
-    return redirect(reverse('index'))
+    return redirect(reverse('/index/'))
 
 def submit_form(request):
-    return redirect('base')
+    return redirect('/base/')
 
 @never_cache
 @login_required(login_url='/login/')
