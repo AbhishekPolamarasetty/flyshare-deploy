@@ -138,7 +138,7 @@ def activateEmail(request, user, to_email):
 
 
 def registerPage(request):
-    import ipdb;ipdb.set_trace()
+    # import ipdb;ipdb.set_trace()
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
