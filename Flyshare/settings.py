@@ -44,6 +44,17 @@ INSTALLED_APPS = [
     'UserAuth',
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',  # Use 'django.core.cache.backends.dummy.DummyCache' to disable caching.
+        'LOCATION': 'unique-snowflake',  # A unique identifier for the cache, required for DummyCache.
+    }
+}   
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 60
+SESSION_COOKIE_SECURE = True
+
 MIDDLEWARE = [
 'django.middleware.security.SecurityMiddleware',
 'django.contrib.sessions.middleware.SessionMiddleware',
@@ -53,7 +64,7 @@ MIDDLEWARE = [
 'django.contrib.auth.middleware.AuthenticationMiddleware',
 'django.contrib.messages.middleware.MessageMiddleware',
 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'Flyshare.urls'

@@ -9,6 +9,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    path('check_session/', check_session, name='check_session'),
     path('auth/',UserModelAPI.as_view()),
     path('auth/<int:id>/',UserModelAPI_ID.as_view()),
     path('',views.indexPage,name='index'),

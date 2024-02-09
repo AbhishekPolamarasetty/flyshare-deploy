@@ -43,8 +43,18 @@ from .forms import UserRegistrationForm
 from .decorators import user_not_authenticated
 from .tokens import account_activation_token
 from django.utils.safestring import mark_safe
+from django.http import JsonResponse
+from django.views.decorators.cache import never_cache
 
 # Create your views here.
+def check_session(request):
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        session_expired = 0 <= 0
+        return JsonResponse({'session_expired': False})
+    else:
+        return JsonResponse({'session_expired': True})
+    
 class UserModelAPI(generics.GenericAPIView):
     authentication_classes = [BasicAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
@@ -169,6 +179,7 @@ def loginPage(request):
            
     return render(request,'Login/login.html')
 
+@never_cache
 @login_required(login_url='login')
 def basePage(request):
     return render(request,'Login/base.html')
@@ -176,24 +187,29 @@ def basePage(request):
 def logout_view(request):
     logout(request)
     return redirect(reverse('index'))
-@login_required(login_url='login')
 
 def submit_form(request):
     return redirect('base')
 
-
+@never_cache
+@login_required(login_url='login')
 def edit_profilePage(request):
     # You can add logic here to retrieve user data if needed
     return render(request, 'Login/edit_profile.html')
 
-
+@never_cache
+@login_required(login_url='login')
 def profilePage(request):
     user_posts = request.user.postmodel_set.all()
     return render(request, 'Login/profile.html', {'user_posts': user_posts})
     # return render(request, 'Login/profile.html')
 
+@never_cache
+@login_required(login_url='login')
 def change_passwordPage(request):
     return render(request, 'Login/change.html')
 
+@never_cache
+@login_required(login_url='login')
 def verifyPage(request):
     return render(request, 'Login/verify.html')
