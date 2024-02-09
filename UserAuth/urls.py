@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from .views import *
 from . import views
 from .Password import *
@@ -9,17 +9,17 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('check_session/', check_session, name='check_session'),
-    path('auth/',UserModelAPI.as_view()),
-    path('auth/<int:id>/',UserModelAPI_ID.as_view()),
-    path('',views.indexPage,name='index'),
-    path('verify/',views.verifyPage,name='verify'),
-    path('register/', views.registerPage, name='register'),
-    path('activate/<uidb64>/<token>', views.activate, name='activate'),
-    path('login/',views.loginPage,name='login'),
-    path('base/',views.basePage,name='base'),
-    path('submit/', views.submit_form, name='submit_form'),
-    path('logout/', views.logout_view, name='logout'),
+    re_path(r'check_session', check_session, name='check_session'),
+    re_path(r'auth',UserModelAPI.as_view()),
+    re_path(r'auth/<int:id>',UserModelAPI_ID.as_view()),
+    re_path(r'',views.indexPage,name='index'),
+    re_path(r'verify/',views.verifyPage,name='verify'),
+    re_path(r'register/', views.registerPage, name='register'),
+    re_path(r'activate/<uidb64>/<token>', views.activate, name='activate'),
+    re_path(r'login/',views.loginPage,name='login'),
+    re_path(r'base/',views.basePage,name='base'),
+    re_path(r'submit/', views.submit_form, name='submit_form'),
+    re_path(r'logout/', views.logout_view, name='logout'),
    
     # path('password_reset/', CustomPasswordResetView.as_view(), name='password_reset'),
     path('password_reset_done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
