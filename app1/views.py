@@ -357,7 +357,7 @@ def home(request):
 from django.shortcuts import render, get_object_or_404
 from .models import Room, Message
 @never_cache
-@login_required(login_url='login')
+@login_required(login_url='/login/')
 def room(request, room):
     username = request.GET.get('username')
 
@@ -379,7 +379,7 @@ def room(request, room):
 
 
 @never_cache
-@login_required(login_url='login')
+@login_required(login_url='/login/')
 def checkview(request):
    room = request.POST.get('room_name', '')
    username = request.POST.get('username', '')
@@ -396,7 +396,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .models import PostModel
 @never_cache
-@login_required(login_url='login')
+@login_required(login_url='/login/')
 @method_decorator(csrf_exempt, name='dispatch')
 def send(request):
     if request.method == 'POST':
