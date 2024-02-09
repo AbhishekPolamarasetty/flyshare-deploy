@@ -94,14 +94,14 @@ DATABASES = {
 "default": {
     "ENGINE": "djongo",
     'ENFORCE_SCHEMA': False,
-    "NAME": "Flyshare-roomlocalhost",  # name of your DB which you want to access
+    "NAME": "Flyshare-roomlocalhost1",  # name of your DB which you want to access
     "CLIENT": {
         'host': 'mongodb+srv://Tharun:Tharun%401316@cluster0.ng51njk.mongodb.net/',  # your db_url if not hosted then localhost
         'port': 27017,  # port e.g. 27017
         'username': 'Tharun',
         'password': 'Tharun@1316',
-        'authSource': 'admin',  # set your db auth_source if you know
-        'authMechanism': 'SCRAM-SHA-1'  # set your auth_mechanism if you know
+        # 'authSource': 'admin',  # set your db auth_source if you know
+        # 'authMechanism': 'SCRAM-SHA-1'  # set your auth_mechanism if you know
 
     }
 }
@@ -159,7 +159,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'flyshare.services@gmail.com'
-EMAIL_HOST_PASSWORD = 'qxwbhihygzrjuqva'
+EMAIL_HOST_PASSWORD = 'uinciigtguegnqcy'
 
 # AUTHENTICATION_BACKENDS = [
 #     'django.contrib.auth.backends.ModelBackend',
