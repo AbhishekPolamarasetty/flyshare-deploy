@@ -174,7 +174,7 @@ def loginPage(request):
         user = authenticate(request,email=uname,password=upass)
         if user is not None:
             login(request, user)
-            return render(request,'Login/base.html')
+            return redirect('base')
         else:
             messages.error(request, "Incorrect credentials. Please try again.")
            
@@ -184,6 +184,7 @@ def loginPage(request):
 
 from django.views import View
 class BasePageView(View):
+    @method_decorator(never_cache)
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
@@ -191,13 +192,6 @@ class BasePageView(View):
     def get(self, request):
         return render(request, 'Login/base.html')
 
-
-
-
-
-
-def basePage(request):
-    return render(request,'Login/base.html')
 
 def logout_view(request):
     logout(request)
