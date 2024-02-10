@@ -44,12 +44,12 @@ INSTALLED_APPS = [
     'UserAuth',
 ]
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',  # Use 'django.core.cache.backends.dummy.DummyCache' to disable caching.
-        'LOCATION': 'unique-snowflake',  # A unique identifier for the cache, required for DummyCache.
-    }
-}   
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',  # Use 'django.core.cache.backends.dummy.DummyCache' to disable caching.
+#         'LOCATION': 'unique-snowflake',  # A unique identifier for the cache, required for DummyCache.
+#     }
+# }   
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 60
