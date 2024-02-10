@@ -176,3 +176,6 @@ EMAIL_HOST_PASSWORD = 'uinciigtguegnqcy'
 #     'django.contrib.auth.backends.ModelBackend',
 #     # other authentication backends if needed
 # ]
+
+
+LOGIN_URL = '/login/'
