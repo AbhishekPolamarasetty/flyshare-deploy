@@ -172,21 +172,23 @@ def loginPage(request):
         upass = request.POST.get('user_password')
         user = authenticate(request,email=uname,password=upass)
         if user is not None:
-            login(request,user)
-            return redirect('/base/')
+            login(request, user)
+            next_url = request.GET.get('next', '/base/')
+            return redirect(next_url)
         else:
             messages.error(request, "Incorrect credentials. Please try again.")
            
     return render(request,'Login/login.html')
 
+
+@login_required(login_url='login')
 @never_cache
-@login_required(login_url='/login/')
 def basePage(request):
     return render(request,'Login/base.html')
 
 def logout_view(request):
     logout(request)
-    return redirect(reverse('/index/'))
+    return redirect(reverse('index'))
 
 def submit_form(request):
     return redirect('/base/')
