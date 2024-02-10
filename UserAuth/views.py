@@ -186,15 +186,19 @@ def loginPage(request):
 
 
 from django.views import View
-class BasePageView(View):
-    @method_decorator(never_cache)
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+# class BasePageView(View):
+#     @method_decorator(never_cache)
+#     @method_decorator(login_required)
+#     def dispatch(self, *args, **kwargs):
+#         return super().dispatch(*args, **kwargs)
 
-    def get(self, request):
-        return render(request, 'Login/base.html')
+#     def get(self, request):
+#         return render(request, 'Login/base.html')
 
+@never_cache
+@login_required(login_url='login')
+def basePage(request):
+    return render(request,'Login/base.html')
 
 def logout_view(request):
     logout(request)
