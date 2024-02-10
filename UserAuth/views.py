@@ -57,8 +57,8 @@ def check_session(request):
         return JsonResponse({'session_expired': True})
     
 class UserModelAPI(generics.GenericAPIView):
-    # authentication_classes = [BasicAuthentication, SessionAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [BasicAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = UserModelSerializer
     queryset = UserModel.objects.all()
     
@@ -74,8 +74,8 @@ class UserModelAPI(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserModelAPI_ID(APIView):
-    # authentication_classes = [BasicAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = UserModelSerializer
     queryset = UserModel.objects.all()
 
@@ -174,7 +174,7 @@ def loginPage(request):
         user = authenticate(request,email=uname,password=upass)
         if user is not None:
             login(request, user)
-            return redirect('base')
+            return render(request,'Login/base.html')
         else:
             messages.error(request, "Incorrect credentials. Please try again.")
            
@@ -201,7 +201,7 @@ def basePage(request):
 
 def logout_view(request):
     logout(request)
-    return redirect(reverse('index'))
+    return render(request, 'Login/login.html')
 
 def submit_form(request):
     return redirect('/base/')
@@ -224,7 +224,6 @@ def profilePage(request):
 def change_passwordPage(request):
     return render(request, 'Login/change.html')
 
-@never_cache
-@login_required(login_url='/login/')
+
 def verifyPage(request):
     return render(request, 'Login/verify.html')
