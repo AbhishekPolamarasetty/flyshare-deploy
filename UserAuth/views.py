@@ -8,7 +8,7 @@ from .serializer import UserModelSerializer
 from .models import UserModel
 from django.shortcuts import get_object_or_404
 
-
+from django.urls import reverse_lazy
 from .forms import *
 
 from django.shortcuts import render, redirect
@@ -45,6 +45,7 @@ from .tokens import account_activation_token
 from django.utils.safestring import mark_safe
 from django.http import JsonResponse
 from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 def check_session(request):
@@ -173,16 +174,28 @@ def loginPage(request):
         user = authenticate(request,email=uname,password=upass)
         if user is not None:
             login(request, user)
-            next_url = request.GET.get('next', '/base/')
-            return redirect(next_url)
+            return redirect('base')
         else:
             messages.error(request, "Incorrect credentials. Please try again.")
            
     return render(request,'Login/login.html')
 
 
-@login_required(login_url='login')
-@never_cache
+
+from django.views import View
+class BasePageView(View):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get(self, request):
+        return render(request, 'Login/base.html')
+
+
+
+
+
+
 def basePage(request):
     return render(request,'Login/base.html')
 
