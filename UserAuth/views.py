@@ -174,7 +174,10 @@ def loginPage(request):
         user = authenticate(request,email=uname,password=upass)
         if user is not None:
             login(request, user)
-            return redirect('base')
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+            else:
+                return redirect('base')
         else:
             messages.error(request, "Incorrect credentials. Please try again.")
            
