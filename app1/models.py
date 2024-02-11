@@ -38,6 +38,7 @@ from datetime import datetime
 
 class Room(models.Model):
     name = models.CharField(max_length=1000)
+    is_active = models.BooleanField(default=False)
     # room = models.CharField(max_length=1000000)
     
 class Message(models.Model):
